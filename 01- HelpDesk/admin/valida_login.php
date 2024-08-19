@@ -1,4 +1,5 @@
 <?php
+#region teste 
     // echo 'Teste ok!';
 
     // print_r($_GET);
@@ -14,7 +15,10 @@
     // echo $_POST['email'];
     // echo '<br>';
     // echo $_POST ['senha'];
-    
+#endregion
+
+    session_start();
+
     $usuario_autenticado = false;
 
     $usuarios_app = array(
@@ -29,11 +33,13 @@
     };
 
     if ($usuario_autenticado) {
-        echo 'Usuario autenticado com Sucesso!';
+        //echo 'Usuario autenticado com Sucesso!';
+        $_SESSION['autenticado'] = 'SIM';
+        header('Location:home.php');
     }
     else {
         // echo 'Erro de autenticação';
-
+        $_SESSION['autenticado'] = 'NÃO';
         header('location:index.php?login=erro');
     };
 ?>
