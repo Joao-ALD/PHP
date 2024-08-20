@@ -2,6 +2,20 @@
 require_once "validador_acesso.php";
 ?>
 
+<?php
+  $chamados = array();
+
+  $arquivo = fopen('arquivo.txt', 'r'); // r = read(ler) // fopen (File Open) = abre o arquivo
+
+  while (!feof($arquivo)) { // feof (File End Of File) = le o arquivo inteiro ate o final e para no final
+    $registro = fgets($arquivo); //fgets = retorna a linha(lida, no ccaso)
+
+    $chamados[] = $registro; 
+  }
+
+  fclose($arquivo); // fecha o arquivo
+?>
+
 <html>
   <head>
     <meta charset="utf-8" />
@@ -43,23 +57,27 @@ require_once "validador_acesso.php";
             
             <div class="card-body">
               
+              <?php 
+                foreach ($chamados as $chamado){
+
+                  $chamado_dados = explode('#', $chamado);
+
+                  if(count($chamado_dados) < 3){
+                    continue;
+                  };
+              ?>
+                
               <div class="card mb-3 bg-light">
                 <div class="card-body">
-                  <h5 class="card-title">Título do chamado...</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Categoria</h6>
-                  <p class="card-text">Descrição do chamado...</p>
-
+                  <h5 class="card-title"><?= $chamado_dados[0]?></h5> 
+                  <h6 class="card-subtitle mb-2 text-muted"><?= $chamado_dados[1]?></h6>
+                  <p class="card-text"><?=$chamado_dados[2]?></p> 
                 </div>
               </div>
 
-              <div class="card mb-3 bg-light">
-                <div class="card-body">
-                  <h5 class="card-title">Título do chamado...</h5>
-                  <h6 class="card-subtitle mb-2 text-muted">Categoria</h6>
-                  <p class="card-text">Descrição do chamado...</p>
-
-                </div>
-              </div>
+              <?php 
+                };
+              ?>
 
               <div class="row mt-5">
                 <div class="col-6">
