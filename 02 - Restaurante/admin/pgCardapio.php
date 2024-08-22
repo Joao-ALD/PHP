@@ -17,7 +17,7 @@ require_once 'menu.php';
 
 <body>
 
-    <div class="container">
+    <div class="container mt-3">
         <!-- Botão Modal Cadastro - Início -->
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Adicionar Cardápio
@@ -32,12 +32,27 @@ require_once 'menu.php';
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+
+                        <form action="opCardapio.php" method="post" enctype="multipart/form-data">
+                        <!-- enctype="multipart/form-data" - a propiedade "permite" enviar a imagem para o banco de dados(na vdd so envia o nome) -->
+                            <div class="mb-3">
+                                <label class="form-label">Cardápio</label>
+                                <input type="text" class="form-control" name="txt_cardapio"
+                                    placeholder="Digite o nome do Cardápio">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="formFile" class="form-label">Foto</label>
+                                <input class="form-control" type="file" name="file_foto">
+                            </div>
+
+                            <div class="modal-footer">
+                                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="modal-footer">
-                        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                        <button type="button" class="btn btn-primary">Cadastrar</button>
-                    </div>
+
                 </div>
             </div>
         </div>
