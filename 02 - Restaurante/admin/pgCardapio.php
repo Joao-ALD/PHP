@@ -75,9 +75,12 @@
                 ?>
 
                 <tr>
-                    <th scope="row"> <?php echo $linha['idcardapio'] ?> </th>
-                    <td><?php echo $linha['cardapio'] ?></td>
-                    <td><?php echo $linha['foto'] ?></td>
+                    <th scope="row"><?php echo $linha['idcardapio']?></th>
+                    <td><?php echo $linha['cardapio']?></td>
+                    <td>
+                        <img src="img/<?php echo $linha['foto']?>" width="100px" alt="">
+                    </td>
+
                     <td>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#ModalCadatro">
