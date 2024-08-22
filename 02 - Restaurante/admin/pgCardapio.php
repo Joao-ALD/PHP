@@ -1,7 +1,7 @@
 <?php
-require_once 'menu.php';
+    require_once 'config.php';
+    require_once 'menu.php';
 ?>
-
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -34,7 +34,7 @@ require_once 'menu.php';
                     <div class="modal-body">
 
                         <form action="opCardapio.php" method="post" enctype="multipart/form-data">
-                        <!-- enctype="multipart/form-data" - a propiedade "permite" enviar a imagem para o banco de dados(na vdd so envia o nome) -->
+                            <!-- enctype="multipart/form-data" - a propiedade "permite" enviar a imagem para o banco de dados(na vdd so envia o nome) -->
                             <div class="mb-3">
                                 <label class="form-label">Cardápio</label>
                                 <input type="text" class="form-control" name="txt_cardapio"
@@ -56,6 +56,43 @@ require_once 'menu.php';
                 </div>
             </div>
         </div>
+        <!-- Listagem Início -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Cardápio</th>
+                    <th scope="col">Foto</th>
+                    <th scope="col">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                    $lista = $pdo->query("SELECT * FROM cardapios"); //QUERY - linguagem "crua" do sql. J ao PREPARE é uma versão modificada
+
+                    while($linha = $lista->fetch(PDO::FETCH_ASSOC)){
+
+                ?>
+
+                <tr>
+                    <th scope="row"> <?php echo $linha['idcardapio'] ?> </th>
+                    <td><?php echo $linha['cardapio'] ?></td>
+                    <td><?php echo $linha['foto'] ?></td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#ModalCadatro">
+                            Editar
+                        </button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                            data-bs-target="#ModalCadastro">
+                            Excluir
+                        </button>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+        <!-- Listagem Fim -->
     </div>
 
 
