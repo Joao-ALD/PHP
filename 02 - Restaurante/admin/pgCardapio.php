@@ -124,9 +124,7 @@ require_once 'menu.php';
                                 </div>
                                 <div class="modal-body">
 
-                                    <form
-                                        action="opCardapio.php?acao=editar&id=<?php echo $linha['idcardapio'] ?>&foto=<?php echo $linha['foto'] ?>"
-                                        method="post" enctype="multipart/form-data">
+                                    <form action="opCardapio.php?acao=editar&id=<?php echo $linha['idcardapio'] ?>&foto=<?php echo $linha['foto'] ?>" method="post" enctype="multipart/form-data">
                                         <!-- enctype="multipart/form-data" - a propiedade "permite" enviar a imagem para o banco de dados(na vdd so envia o nome) -->
                                         <div class="mb-3">
                                             <label class="form-label">Cardápio</label>

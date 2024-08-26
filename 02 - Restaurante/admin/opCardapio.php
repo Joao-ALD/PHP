@@ -57,10 +57,19 @@
             $edit ->execute();
 
             header("Location: pgCardapio.php");
-        }
-        else {
+        } else {
             // echo 'Com foto';
-            
+            unlink('img/' . $fotodb);
+                if (move_uploaded_file($foto_temp, $destino)){
+                    $edit = $pdo->prepare("UPDATE cardapios SET cardapio = ?, foto = ? WHERE idcardapio = ?"); //prepare  
+                    
+                    $edit ->bindValue(1, $cardapio);
+                    $edit ->bindValue(2, $foto);
+                    $edit ->bindValue(3, $id);
+                    $edit->execute();
+        
+                    header("Location: pgCardapio.php");
+                };
         }
     }
 
