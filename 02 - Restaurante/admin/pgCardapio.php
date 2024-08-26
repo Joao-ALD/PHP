@@ -71,7 +71,6 @@
                     $lista = $pdo->query("SELECT * FROM cardapios"); //QUERY - linguagem "crua" do sql. J ao PREPARE é uma versão modificada
 
                     while($linha = $lista->fetch(PDO::FETCH_ASSOC)){
-
                 ?>
 
                 <tr>
@@ -92,7 +91,7 @@
                         </button>
                     </td>
                 </tr>
-                <?php } ?>
+                <?php }; ?>
             </tbody>
         </table>
         <!-- Listagem Fim -->
