@@ -37,21 +37,24 @@ require_once 'menu.php';
                             <!-- enctype="multipart/form-data" - a propiedade "permite" enviar a imagem para o banco de dados(na vdd so envia o nome) -->
                             <div class="mb-3">
                                 <label class="form-label">Prato</label>
-                                <input type="text" class="form-control" name="  " placeholder="Digite o nome do Prato">
+                                <input type="text" class="form-control" name="txt_prato"
+                                    placeholder="Digite o nome do Prato">
                             </div>
 
                             <div class="mb-3">
-                            <label class="form-label">Seleceione o Cardápio</label>
+                                <label class="form-label">Seleceione o Cardápio</label>
                                 <select class="form-select" name="txt_cardapio">
-                                    <?php 
+                                    <?php
 
-                                        $sql = $pdo->query("SELECT * FROM cardapios ORDER BY cardapio"); //QUERY - linguagem "crua" do sql. J ao PREPARE é uma versão modificada
+                                    $sql = $pdo->query("SELECT * FROM cardapios ORDER BY cardapio"); //QUERY - linguagem "crua" do sql. J ao PREPARE é uma versão modificada
+                                    
+                                    while ($linha = $sql->fetch(PDO::FETCH_ASSOC)) {
+                                        ?>
+                                        <option value="<?php echo $linha['idcardapio'] ?>"><?php echo $linha['cardapio'] ?>
+                                        </option>
 
-                                        while ($linha = $sql -> fetch(PDO::FETCH_ASSOC)) {
-                                    ?>
-                                    <option value="<?php echo $linha['idcardapio']?>"><?php echo $linha['cardapio']?></option>
-
-                                    <?php }; ?>
+                                    <?php }
+                                    ; ?>
                                 </select>
                             </div>
 
@@ -66,7 +69,6 @@ require_once 'menu.php';
                             </div>
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -83,13 +85,15 @@ require_once 'menu.php';
             </thead>
             <tbody>
                 <?php
-                $lista = $pdo->query("SELECT * FROM pratos"); //QUERY - linguagem "crua" do sql. J ao PREPARE é uma versão modificada
+                $lista = $pdo->query("SELECT p.idprato, p.prato, p.foto, c.cardapio, c.idcardapio
+                                    FROM pratos p INNER JOIN cardapios c
+                                    ON p.idcardapio = c.idcardapio"); //QUERY - linguagem "crua" do sql. J ao PREPARE é uma versão modificada
                 
                 while ($linha = $lista->fetch(PDO::FETCH_ASSOC)) {
                     ?>
 
                     <tr>
-                        <th scope="row"><?php echo $linha['idpratos'] ?></th>
+                        <th scope="row"><?php echo $linha['idprato'] ?></th>
                         <th><?php echo $linha['prato'] ?></th>
                         <td><?php echo $linha['cardapio'] ?></td>
                         <td>
@@ -98,18 +102,18 @@ require_once 'menu.php';
 
                         <td>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#modalEditar<?php echo $linha['idpratos'] ?>">
+                                data-bs-target="#modalEditar<?php echo $linha['idprato'] ?>">
                                 Editar
                             </button>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#modalExcluir<?php echo $linha['idpratos'] ?>">
+                                data-bs-target="#modalExcluir<?php echo $linha['idprato'] ?>">
                                 Excluir
                             </button>
                         </td>
                     </tr>
 
                     <!-- Modal Excluir - Início -->
-                    <div class="modal fade" id="modalExcluir<?php echo $linha['idpratos'] ?>" tabindex="-1"
+                    <div class="modal fade" id="modalExcluir<?php echo $linha['idprato'] ?>" tabindex="-1"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -119,7 +123,7 @@ require_once 'menu.php';
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <a href="opPrato.php?acao=excluir&id=<?php echo $linha['idpratos'] ?>&foto=<?php echo $linha['foto'] ?>"
+                                    <a href="opPrato.php?acao=excluir&id=<?php echo $linha['idprato'] ?>&foto=<?php echo $linha['foto'] ?>"
                                         class="btn btn-primary">Sim</a>
                                     <button class="btn btn-danger" data-bs-dismiss="modal">Não</button>
                                 </div>
@@ -129,8 +133,7 @@ require_once 'menu.php';
                     <!-- Modal Excluir - Fim -->
 
                     <!-- Modal Editar - Início -->
-                    <div class="modal fade" id="modalEditar<?php echo $linha['idpratos'] ?>" tabindex="-1"
-                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="modalEditar<?php echo $linha['idprato'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -141,13 +144,36 @@ require_once 'menu.php';
                                 <div class="modal-body">
 
                                     <form
-                                        action="opPrato.php?acao=editar&id=<?php echo $linha['idpratos'] ?>&foto=<?php echo $linha['foto'] ?>"
+                                        action="opPrato.php?acao=editar&id=<?php echo $linha['idprato'] ?>&foto=<?php echo $linha['foto'] ?>"
                                         method="post" enctype="multipart/form-data">
                                         <!-- enctype="multipart/form-data" - a propiedade "permite" enviar a imagem para o banco de dados(na vdd so envia o nome) -->
                                         <div class="mb-3">
                                             <label class="form-label">Prato</label>
                                             <input type="text" class="form-control" name="txt_prato"
                                                 placeholder="Digite o nome do Prato" value="<?php echo $linha['prato'] ?>">
+                                        </div>
+
+
+                                        <div class="mb-3">
+                                            <label for="" class="form-label">Selecione o Cardápio</label>
+                                            <select class="form-select" name="txt_cardapio">
+                                                <?php
+                                                $sql = $pdo->query("SELECT * FROM cardapios ORDER BY cardapio"); //QUERY - linguagem "crua" do sql. J ao PREPARE é uma versão modificada
+
+                                                while ($linhac = $sql->fetch(PDO::FETCH_ASSOC)) {
+                                                    if($linhac['idcardapio'] == $linhac['idcardapio']){
+                                                    ?>
+                                                    <option value="<?php echo $linhac['idcardapio'] ?>">
+                                                        <?php echo $linhac['cardapio'] ?>
+                                                    </option>
+
+                                                <?php } else {?>
+                                                    <option value="<?php echo $linhac['idcardapio'] ?>">
+                                                        <?php echo $linhac['cardapio'] ?>
+                                                    </option>
+                                                <?php   }; 
+                                                }; ?>
+                                            </select>
                                         </div>
 
                                         <div class="mb-3">
@@ -173,7 +199,6 @@ require_once 'menu.php';
         </table>
         <!-- Listagem Fim -->
     </div>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
