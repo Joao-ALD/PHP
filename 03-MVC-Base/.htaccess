@@ -1,4 +1,4 @@
 RewriteEngine ON
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d 
-RewriteRule ^(.*)$ /PHP/MVC/index.php?url=$1 [QSA,L]
+RewriteRule ^(.*)$ /PHP/03-MVC-Base/index.php?url=$1 [QSA,L]
