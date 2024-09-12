@@ -41,9 +41,13 @@
                 $currentAction = 'index';
             }
 
-            echo 'CONTROLLER: ' . $currentController . '<br>';
-            echo 'ACTION: ' . $currentAction . '<br>';
-            echo 'PARAMS: ' . print_r($params, true) . '<br>';
+            // echo 'CONTROLLER: ' . $currentController . '<br>';
+            // echo 'ACTION: ' . $currentAction . '<br>';
+            // echo 'PARAMS: ' . print_r($params, true) . '<br>';
+
+            $c = new $currentController(); //new - prepara para receber em qualquer outra parte do programa 
+
+            call_user_func_array(array($c, $currentAction), $params);
         }
     }
 ?>
