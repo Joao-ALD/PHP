@@ -18,5 +18,5 @@
     });
 
     $core = new Core();
-    $core -> run();
+    $core->run();
 ?>
