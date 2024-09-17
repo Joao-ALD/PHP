@@ -4,7 +4,7 @@
             $array = array();
 
             $sql = "SELECT * FROM contatos";
-            $sql = $this -> db->query($sql);
+            $sql = $this->db->query($sql);
 
             if($sql->rowCount() > 0){
                 $array = $sql->fetchAll();
