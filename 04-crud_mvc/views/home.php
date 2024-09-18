@@ -1,5 +1,5 @@
 <div class="container">
-    <a href="<?php echo BASE_URL ?>contatos/add" class="btn btn-secondary mt-3">Adicionar contato</a>
+    <a href="<?php echo BASE_URL ?>/contatos/add" class="btn btn-secondary mt-3">Adicionar contato</a>
 
     <!-- Listagem Início -->
     <table class="table text-center table-bordered mt-3">
@@ -18,8 +18,8 @@
                 <td><?php echo $item['nome']; ?></td>
                 <td><?php echo $item['email']; ?></td>
                 <td>
-                <a href="<?php echo BASE_URL ?>contatos/edit/<?php echo $item['id']; ?>" class="btn btn-primary mt-3">Editar</a>
-                <a href="<?php echo BASE_URL ?>contatos/del/<?php echo $item['id']; ?>" class="btn btn-danger mt-3">Deletar</a>
+                <a href="<?php echo BASE_URL ?>/contatos/edit/<?php echo $item['id']; ?>" class="btn btn-primary mt-3">Editar</a>
+                <a href="<?php echo BASE_URL ?>/contatos/del/<?php echo $item['id']; ?>" class="btn btn-danger mt-3">Deletar</a>
                 </td>
             </tr>
             <?php endforeach; ?>
