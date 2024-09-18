@@ -1,33 +1,29 @@
 <div class="container">
     <a href="<?php echo BASE_URL ?>contatos/add" class="btn btn-secondary mt-3">Adicionar contato</a>
 
-    <table class="table">
-        <thead>
+    <!-- Listagem Início -->
+    <table class="table text-center table-bordered mt-3">
+        <thead class="table-dark">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Ações</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider align-midle">
+            <?php foreach ($lista as $item): ?> <!-- uma forma diferente de utilizar o foreach. usando : ao invés de () porém desta forma precisa fechar c endforeach -->
             <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <th scope="row"><?php echo $item['id']; ?></th>
+                <td><?php echo $item['nome']; ?></td>
+                <td><?php echo $item['email']; ?></td>
+                <td>
+                <a href="<?php echo BASE_URL ?>contatos/edit/<?php echo $item['id']; ?>" class="btn btn-primary mt-3">Editar</a>
+                <a href="<?php echo BASE_URL ?>contatos/del/<?php echo $item['id']; ?>" class="btn btn-danger mt-3">Deletar</a>
+                </td>
             </tr>
-            <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-            </tr>
-            <tr>
-                <th scope="row">3</th>
-                <td colspan="2">Larry the Bird</td>
-                <td>@twitter</td>
-            </tr>
+            <?php endforeach; ?>
         </tbody>
     </table>
+    <!-- Listagem Fim -->
 </div>
