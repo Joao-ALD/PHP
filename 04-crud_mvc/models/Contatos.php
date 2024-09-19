@@ -63,5 +63,13 @@
             }
 
             return $array;
-        } 
+        }
+
+        public function edit($nome,$id){
+            $sql = "UPDATE contatos SET nome = :nome WHERE id = :id";
+            $sql = $this->db->prepare($sql);
+            $sql ->bindValue(':nome', $nome);
+            $sql ->bindValue(':id', $id);
+            $sql ->execute();
+        }
     }
