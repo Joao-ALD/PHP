@@ -1,22 +1,74 @@
-<?php 
-    class contatosController extends controller{
-        public function index(){ }
+<?php
+class contatosController extends controller
+{
+    public function index()
+    {
+    }
 
-        public function add(){
-            $dados = array();
+    public function add()
+    {
+        $dados = array(
+            'error' => ''
+        );
+        // erro => é o índice e o valor que ele recebe é vazio
 
-            $this->loadTemplate('add', $dados);
+        if (!empty($_GET['error'])) {
+            $dados['error'] = $_GET['error'];
         }
 
-        public function add_Save(){
-            if(!empty($_POST['email'])){
-                $nome = $_POST['nome'];
-                $email= $_POST['email'];
+        $this->loadTemplate('add', $dados);
+    }
 
-                $contatos = new Contatos();
-                $contatos -> add($nome, $email);
+    public function add_Save()
+    {
+        if (!empty($_POST['email'])) {
+            $nome = $_POST['nome'];
+            $email = $_POST['email'];
 
-                header("Location: ". BASE_URL);
+            $contatos = new Contatos();
+
+            if ($contatos->add($nome, $email)) {
+                header("Location: " . BASE_URL);
+            } else {
+                header("Location: " . BASE_URL . "/contatos/add?error=exist");
             }
+            ;
+        } else {
+            header("Location: " . BASE_URL . "/contatos/add");
         }
     }
+
+    public function del($id)
+    {
+        if (!empty($id)) {
+            $contatos = new Contatos();
+
+            $contatos->delete($id);
+        }
+
+        header("Location:" . BASE_URL);
+    }
+
+    public function edit($id)
+    {
+        $dados = array();
+
+        if (!empty($id)) {
+            $contatos = new Contatos();
+
+            if (!empty($_POST['nome'])) {
+                $nome = $_POST['nome'];
+
+                $contatos->edit($nome, $id);
+            } else {
+                $dados['info'] = $contatos->get($id);
+
+                if(isset($dados['info']['id'])){
+                    $this->loadTemplate('edit', $dados);
+                    exit;
+                }
+            }
+        }
+        header("Location:". BASE_URL);
+    }
+}
